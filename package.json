@@ -3,7 +3,7 @@
     "version": "1.0.0",
     "license": "MIT",
     "scripts": {
-        "start": "npm install -g ts-node && npx prisma db push && npm run dev",
+        "start": "npm install && npm install -g ts-node && npx prisma db push && npm run dev",
         "dev": "ts-node src/index.ts"
     },
     "dependencies": {
