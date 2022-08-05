@@ -1,5 +1,5 @@
-import { Prisma, PrismaClient } from '@prisma/client'
-import express from 'express'
+const express = require('express')
+const { PrismaClient } = require('@prisma/client')
 
 const prisma = new PrismaClient()
 const app = express()
@@ -9,9 +9,11 @@ app.use(express.json())
 app.post(`/signup`, async (req, res) => {
   const { name, email, posts } = req.body
 
-  const postData = posts?.map((post: Prisma.PostCreateInput) => {
-    return { title: post?.title, content: post?.content }
-  })
+  const postData = posts
+    ? posts.map((post) => {
+        return { title: post.title, content: post.content || undefined }
+      })
+    : []
 
   const result = await prisma.user.create({
     data: {
@@ -69,7 +71,7 @@ app.put('/publish/:id', async (req, res) => {
 
     const updatedPost = await prisma.post.update({
       where: { id: Number(id) || undefined },
-      data: { published: !postData?.published },
+      data: { published: !postData.published || undefined },
     })
     res.json(updatedPost)
   } catch (error) {
@@ -109,7 +111,7 @@ app.get('/user/:id/drafts', async (req, res) => {
 })
 
 app.get(`/post/:id`, async (req, res) => {
-  const { id }: { id?: string } = req.params
+  const { id } = req.params
 
   const post = await prisma.post.findUnique({
     where: { id: Number(id) },
@@ -120,11 +122,11 @@ app.get(`/post/:id`, async (req, res) => {
 app.get('/feed', async (req, res) => {
   const { searchString, skip, take, orderBy } = req.query
 
-  const or: Prisma.PostWhereInput = searchString
+  const or = searchString
     ? {
         OR: [
-          { title: { contains: searchString as string } },
-          { content: { contains: searchString as string } },
+          { title: { contains: searchString } },
+          { content: { contains: searchString } },
         ],
       }
     : {}
@@ -138,7 +140,7 @@ app.get('/feed', async (req, res) => {
     take: Number(take) || undefined,
     skip: Number(skip) || undefined,
     orderBy: {
-      updatedAt: orderBy as Prisma.SortOrder,
+      updatedAt: orderBy || undefined,
     },
   })
 

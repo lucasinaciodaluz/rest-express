@@ -1,6 +1,6 @@
 # REST API Example
 
-This example shows how to implement a **REST API with TypeScript** using [Express](https://expressjs.com/) and [Prisma Client](https://www.prisma.io/docs/concepts/components/prisma-client). It is based on a SQLite database, you can find the database file with some dummy data at [`./prisma/dev.db`](./prisma/dev.db).
+This example shows how to implement a **REST API** using [Express](https://expressjs.com/) and [Prisma Client](https://www.prisma.io/docs/concepts/components/prisma-client). It uses a SQLite database file with some initial dummy data which you can find at [`./prisma/dev.db`](./prisma/dev.db).
 
 ## Getting started
 
@@ -9,11 +9,10 @@ This example shows how to implement a **REST API with TypeScript** using [Expres
 Download this example:
 
 ```
-curl https://codeload.github.com/prisma/prisma-examples/tar.gz/latest | tar -xz --strip=2 prisma-examples-latest/typescript/rest-express
+curl https://codeload.github.com/prisma/prisma-examples/tar.gz/latest | tar -xz --strip=2 prisma-examples-latest/javascript/rest-express
 ```
 
 Install npm dependencies:
-
 ```
 cd rest-express
 npm install
@@ -30,7 +29,7 @@ git clone git@github.com:prisma/prisma-examples.git --depth=1
 Install npm dependencies:
 
 ```
-cd prisma-examples/typescript/rest-express
+cd prisma-examples/javascript/rest-express
 npm install
 ```
 
@@ -44,7 +43,7 @@ Run the following command to create your SQLite database file. This also creates
 npx prisma migrate dev --name init
 ```
 
-When `npx prisma migrate dev` is executed against a newly created database, seeding is also triggered. The seed file in [`prisma/seed.ts`](./prisma/seed.ts) will be executed and your database will be populated with the sample data.
+When `npx prisma migrate dev` is executed against a newly created database, seeding is also triggered.  The seed file in [`prisma/seed.js`](./prisma/seed.js) will be executed and your database will be populated with the sample data.
 
 
 ### 3. Start the REST API server
@@ -53,7 +52,7 @@ When `npx prisma migrate dev` is executed against a newly created database, seed
 npm run dev
 ```
 
-The server is now running on `http://localhost:3000`. You can now the API requests, e.g. [`http://localhost:3000/feed`](http://localhost:3000/feed).
+The server is now running on `http://localhost:3000`. You can send the API requests implemented in `index.js`, e.g. [`http://localhost:3000/feed`](http://localhost:3000/feed).
 
 ## Using the REST API
 
@@ -151,9 +150,9 @@ You can now use your `PrismaClient` instance to perform operations against the n
 
 #### 2.1 Add the API endpoint to your app
 
-Update your `index.ts` file by adding a new endpoint to your API:
+Update your `index.js` file by adding a new endpoint to your API:
 
-```ts
+```js
 app.post('/user/:id/profile', async (req, res) => {
   const { id } = req.params
   const { bio } = req.body
@@ -169,7 +168,7 @@ app.post('/user/:id/profile', async (req, res) => {
     }
   })
 
-  res.json(profile)
+  res.send(profile)
 })
 ```
 
