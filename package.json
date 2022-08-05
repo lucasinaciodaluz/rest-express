@@ -3,7 +3,7 @@
     "version": "1.0.0",
     "license": "MIT",
     "scripts": {
-        "start": "npx prisma migrate dev --name init && npm run dev",
+        "start": "npx prisma db push --name init && npm run dev",
         "dev": "ts-node src/index.ts"
     },
     "dependencies": {
