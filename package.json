@@ -18,6 +18,6 @@
         "typescript": "4.7.4"
     },
     "prisma": {
-        "seed": "ts-node prisma/seed.ts"
+        "seed": "node prisma/seed.ts"
     }
 }
